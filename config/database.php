@@ -43,7 +43,8 @@ return [
             'hostname' => env('MONGO_HOST',''),
             'hostport' => env('MONGO_PORT',''),
             'username' => env('MONGO_USER',''),
-            'password' => env('MONGO_PASW','')
+            'password' => env('MONGO_PASW',''),
+            'database' => env('MONGO_DB','')
         ]
     ],
 ];

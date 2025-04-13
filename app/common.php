@@ -41,7 +41,7 @@ function util_request($url, $isPOST = false, $data = null)
     $response = curl_exec($ch);
     $errno = curl_errno($ch);
     if ($errno) {
-        return json_encode(['code' => $errno, 'errmsg' => curl_error($ch)]);
+        return json_encode(['code' => 1, 'errmsg' => curl_error($ch)]);
     }
 
     curl_close($ch);
