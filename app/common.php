@@ -1,11 +1,9 @@
 <?php
-//function decryptData() {
-//    private $appid;
-//    private $sessionKey;
-//}
-
-function request($url, $isPOST = false, $data = null)
+function request($url, $data = null, $isPOST = false)
 {
+    if ($isPOST == false && !is_null($data)) {
+        $url .= '?' . http_build_query($data);
+    }
     $ch = curl_init($url);
 
     curl_setopt($ch, CURLOPT_POST, $isPOST);
@@ -21,9 +19,33 @@ function request($url, $isPOST = false, $data = null)
 
     $response = curl_exec($ch);
     if (curl_errno($ch)) {
-        return json_encode(['code' => 0, 'errmsg' => curl_error($ch)], JSON_UNESCAPED_UNICODE);
+        $response = ['code' => 0, 'msg' => curl_error($ch)];
+    } else {
+        $response = json_decode($response, true);
     }
 
     curl_close($ch);
-    return json_decode($response, true);
+    return $response;
+}
+
+function weather($url, $data = null)
+{
+    if (!is_null($data)) {
+        $url .= '?' . http_build_query($data);
+    }
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_POST, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    $response = curl_exec($ch);
+    if (curl_errno($ch)) {
+        $response = ['code' => 0, 'msg' => curl_error($ch)];
+    } else {
+        $response = json_decode($response, true);
+    }
+
+    curl_close($ch);
+    return $response;
 }
