@@ -39,4 +39,11 @@ class User extends BaseController
             }
         }
     }
+
+    public function setLine()
+    {
+        $params = (new UserValidate())->isPost()->goCheck('setLine');
+        Db::name("")
+        return json($params);
+    }
 }

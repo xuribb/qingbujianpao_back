@@ -9,18 +9,18 @@ abstract class BaseValidate extends Validate
 {
     public function isPost()
     {
-        if($this->request->isPost()){
+        if ($this->request->isPost()) {
             return $this;
-        }else{
+        } else {
             throw new HttpMethod();
         }
     }
 
     public function isGet()
     {
-        if($this->request->isGet()){
+        if ($this->request->isGet()) {
             return $this;
-        }else{
+        } else {
             throw new HttpMethod();
         }
     }
