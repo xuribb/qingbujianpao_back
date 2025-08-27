@@ -43,7 +43,27 @@ class User extends BaseController
     public function setLine()
     {
         $params = (new UserValidate())->isPost()->goCheck('setLine');
-        Db::name("")
-        return json($params);
+        $result = Db::name("record")->insertGetId($params);
+        if ($result) {
+            return json(['code' => 1, 'msg' => '保存记录成功', 'data' => ['_id' => $result]]);
+        } else {
+            return json(['code' => 0, 'msg' => '保存记录失败']);
+        }
+    }
+
+    public function getLine()
+    {
+        $params = (new UserValidate())->isPost()->goCheck('getLine');
+        if (empty($params['_id'])) {
+            $result = Db::name("record")->where("openid", $params['openid'])->field('_id')->order("_id", 'desc')->select()->toArray();
+            $result = array_map(function ($val) {
+                $val['timestamp'] = $val['_id']->getTimestamp();
+                $val['_id'] = $val['_id']->__toString();
+                return $val;
+            }, $result);
+        } else {
+            $result = Db::name("record")->where("openid", $params['openid'])->where('_id', $params['_id'])->field('points')->findOrEmpty();
+        }
+        return json(['code' => 1, 'msg' => '获取信息成功', 'data' => $result]);
     }
 }
