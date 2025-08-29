@@ -22,7 +22,9 @@
 
 ## 项目部署
 
-0. 运行环境：PHP8(fileinfo扩展，putenv函数)、MongoDB
+0. 运行环境：PHP8、MongoDB
+    - 删除禁用函数putenv、popen、exec
+    - 安装fileinfo扩展、mongodb扩展
 
 1. 请配置 `.env.example` 文件信息到 `.env`;
 
