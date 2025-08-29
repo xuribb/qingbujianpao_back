@@ -62,7 +62,7 @@ class User extends BaseController
                 return $val;
             }, $result);
         } else {
-            $result = Db::name("record")->where("openid", $params['openid'])->where('_id', $params['_id'])->field('points')->findOrEmpty();
+            $result = Db::name("record")->where("openid", $params['openid'])->where('_id', $params['_id'])->field('points,distance,speed')->findOrEmpty();
         }
         return json(['code' => 1, 'msg' => '获取信息成功', 'data' => $result]);
     }
